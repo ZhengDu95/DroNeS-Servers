@@ -215,7 +215,6 @@ class AStar:
                 return
 
             last_point = self.current_point
-            
             # decide f values in open file
             index, self.current_point = self.min_f()
 
@@ -235,9 +234,5 @@ class AStar:
             self.child_point(self.current_point)  # generate child_point
             # delete optimal point in open list
             self.open = delete(self.open, index, axis=1)
-
             self.g = self.g + self.g_value_tem(self.current_point, last_point)
-
             ite = ite + 1
-            
-            
