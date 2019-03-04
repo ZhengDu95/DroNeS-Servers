@@ -239,4 +239,3 @@ class AStar:
             self.g = self.g + self.g_value_tem(self.current_point, last_point)
 
             ite = ite + 1
-            
