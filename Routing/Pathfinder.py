@@ -156,7 +156,7 @@ class AStar:
                         continue
 
                     # remove obtacle
-                    if self.map_grid[int(x[0] + j), int(x[1] + q),\
+                    if self.map_grid[int(x[0] + j), int(x[1] + q),
                                      int(x[2] + w)] == 1:
                         continue
                     # remove point that is out of boundary
@@ -216,8 +216,8 @@ class AStar:
 
             last_point = self.current_point
             
-            #decide f values in open file
-            index, self.current_point = self.min_f() 
+            # decide f values in open file
+            index, self.current_point = self.min_f()
 
             self.waypoints.append(self.current_point)
 
@@ -239,3 +239,4 @@ class AStar:
             self.g = self.g + self.g_value_tem(self.current_point, last_point)
 
             ite = ite + 1
+            
