@@ -1,5 +1,5 @@
 import numpy as np
-from pylab import *
+from pylab import delete
 
 map_grid = np.zeros((1000, 1000, 1000))
 
@@ -95,7 +95,7 @@ class AStar:
         self.goal = np.array(self.endPoint)  # end point
 
     def h_value_tem(self, current_p):
-        # calculate heuristic estimated cost h value between each nodes and destination
+        # heuristic estimated cost h value between each nodes and destination
         # current_p: coordinate of current node
 
         # Manhattan distance
@@ -109,8 +109,8 @@ class AStar:
 
     def g_value_tem(self, child_p, current_p):
         # calculate estimated cost g value between current and child points
-        #:param child_p:coordinate of child point
-        #:param current_p:coordinate of parent point (self.current_point)
+        # param child_p:coordinate of child point
+        # param current_p:coordinate of parent point (self.current_point)
 
         g1 = current_p[0] - child_p[0]
         g2 = current_p[1] - child_p[1]
@@ -121,21 +121,22 @@ class AStar:
 
     def f_value_tem(self, child_p, current_p):
         # calculate f value considering both g and h value
-        #:return:
+        # return:
 
         f = self.g_value_tem(child_p, current_p) + self.h_value_tem(current_p)
         return f
 
     def min_f(self):
         # find the minimum value in open and take this point as current_point
-        #:return index and coordinates of this point
+        # return index and coordinates of this point
         # if reaching the boundary, next direction is random
         # and clear the list of open
 
         tem_f = []  # creat a temporary list of f values
         for i in range(self.open.shape[1]):
             # calculate total f values for current nodes
-            f_value = self.f_value_tem(self.current_point, self.open[:, i]) + self.g
+            f_value = self.f_value_tem(self.current_point, self.open[:, i]) \
+                    + self.g
             tem_f.append(f_value)
         index = tem_f.index(min(tem_f))  # return smallest index value
         location = self.open[:, index]  # return smallest coordinates value
@@ -143,8 +144,8 @@ class AStar:
         return index, location
 
     def child_point(self, x):
-        #:param x: parent coordinates
-        #:return: void, store child points in open list
+        # param x: parent coordinates
+        # return: void, store child points in open list
 
         # search 8 adjacent points
         for j in range(-1, 2, 1):
@@ -155,7 +156,8 @@ class AStar:
                         continue
 
                     # remove obtacle
-                    if self.map_grid[int(x[0] + j), int(x[1] + q), int(x[2] + w)] == 1:
+                    if self.map_grid[int(x[0] + j), int(x[1] + q),\
+                                     int(x[2] + w)] == 1:
                         continue
                     # remove point that is out of boundary
                     if (
@@ -182,7 +184,7 @@ class AStar:
 
     def judge_location(self, x, j, q, w, list_co):
         # decide point exists whether in open or close lists
-        #:return:
+        # return:
 
         jud = 0
         for i in range(list_co.shape[1]):  # print how many columns
@@ -213,8 +215,9 @@ class AStar:
                 return
 
             last_point = self.current_point
-
-            index, self.current_point = self.min_f()  # decide f values in open file
+            
+            #decide f values in open file
+            index, self.current_point = self.min_f() 
 
             self.waypoints.append(self.current_point)
 
@@ -236,4 +239,3 @@ class AStar:
             self.g = self.g + self.g_value_tem(self.current_point, last_point)
 
             ite = ite + 1
-
